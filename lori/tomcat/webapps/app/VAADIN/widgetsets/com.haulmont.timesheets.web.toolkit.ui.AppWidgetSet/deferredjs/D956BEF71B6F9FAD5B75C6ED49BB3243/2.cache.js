@@ -1,0 +1,1 @@
+$wnd.com_haulmont_timesheets_web_toolkit_ui_AppWidgetSet.runAsyncCallback2('Vqb(2144,1,Vgf);_.Nc=function Mvd(){B6c((!u6c&&(u6c=new G6c),u6c),this.a.d)};V$e(Vh)(2);\n//# sourceURL=com.haulmont.timesheets.web.toolkit.ui.AppWidgetSet-2.js\n')
