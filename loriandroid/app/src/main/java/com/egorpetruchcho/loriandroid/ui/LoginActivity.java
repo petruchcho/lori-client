@@ -2,19 +2,17 @@ package com.egorpetruchcho.loriandroid.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.egorpetruchcho.loriandroid.R;
-import com.egorpetruchcho.loriandroid_api.LoriApi;
+import com.egorpetruchcho.loriandroid.background.tasks.LoginTask;
+import com.egorpetruchcho.loriandroid.core.LoriActivity;
 import com.egorpetruchcho.loriandroid_api.model.Locale;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends LoriActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,15 +29,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        LoriApi.getInstance().login("admin", "admin", Locale.RU, new Callback<String>() {
+        getBackgroundManager().execute(new LoginTask("admin", "admin", Locale.RU), new RequestListener<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Toast.makeText(LoginActivity.this, response.body(), Toast.LENGTH_LONG).show();
+            public void onRequestFailure(SpiceException spiceException) {
+                Toast.makeText(LoginActivity.this, "fail:))", Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "fail)))", Toast.LENGTH_LONG).show();
+            public void onRequestSuccess(String s) {
+                Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
     }

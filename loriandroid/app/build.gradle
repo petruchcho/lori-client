@@ -29,5 +29,8 @@ dependencies {
     compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
     compile "com.android.support:design:$androidSupportLibraryVersion"
 
+    compile ('com.octo.android.robospice:robospice:1.4.5') {
+        exclude module: 'support-v4'
+    }
     compile project(':loriandroid-api')
 }
