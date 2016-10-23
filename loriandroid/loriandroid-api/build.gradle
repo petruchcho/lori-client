@@ -1,22 +1,24 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
+
     defaultConfig {
-        applicationId "com.egorpetruchcho.loriandroid"
         minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         debug {
-
+            buildConfigField "String", "LORI_HOST", "\"http://192.168.0.103:8080/\""
         }
-
         release {
+            buildConfigField "String", "LORI_HOST", "\"http://192.168.0.103:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -26,8 +28,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
-    compile "com.android.support:design:$androidSupportLibraryVersion"
-
-    compile project(':loriandroid-api')
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
 }
