@@ -1,5 +1,7 @@
 package com.egorpetruchcho.loriandroid.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -40,6 +42,10 @@ public class LoginActivity extends LoriActivity {
                 Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public static void startMe(Context context) {
+        context.startActivity(new Intent(context, LoginActivity.class));
     }
 }
 

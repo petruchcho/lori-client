@@ -13,4 +13,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Splash -->
+    <string name="splash_text">Lori Awesome Logo</string>
 </resources>
