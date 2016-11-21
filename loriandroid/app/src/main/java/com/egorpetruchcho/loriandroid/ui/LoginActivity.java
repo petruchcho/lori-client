@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.background.tasks.LoginTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
+import com.egorpetruchcho.loriandroid.state.ApplicationSavedState;
+import com.egorpetruchcho.loriandroid.ui.timesheet.TimesheetActivity;
 import com.egorpetruchcho.loriandroid_api.model.Locale;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
@@ -40,6 +42,8 @@ public class LoginActivity extends LoriActivity {
             @Override
             public void onRequestSuccess(String s) {
                 Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
+                ApplicationSavedState.getInstance().setAuthKey(s);
+                TimesheetActivity.startMe(LoginActivity.this);
             }
         });
     }

@@ -27,7 +27,7 @@
             android:label="@string/app_name" />
 
         <activity
-            android:name=".ui.TimesheetActivity"
+            android:name=".ui.timesheet.TimesheetActivity"
             android:label="@string/app_name" />
 
         <service

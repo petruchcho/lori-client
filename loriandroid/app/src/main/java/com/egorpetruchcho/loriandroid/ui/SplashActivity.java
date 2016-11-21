@@ -21,6 +21,7 @@ public class SplashActivity extends LoriActivity {
                 LoginActivity.startMe(SplashActivity.this);
             } else {
                 // TODO move to main activity
+                LoginActivity.startMe(SplashActivity.this);
             }
             finish();
         }
