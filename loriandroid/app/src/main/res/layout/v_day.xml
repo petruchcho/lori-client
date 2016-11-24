@@ -10,23 +10,23 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/day_of_week_label"
             style="?android:textAppearanceLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Понедельник" />
+            android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/day_date_label"
             style="?android:textAppearanceMedium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15 ноября 2016" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/count_of_hours_label"
         style="?android:textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:text="12 Часов" />
+        android:layout_centerVertical="true" />
 </RelativeLayout>

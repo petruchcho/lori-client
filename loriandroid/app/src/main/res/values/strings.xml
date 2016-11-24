@@ -16,4 +16,13 @@
 
     <!-- Splash -->
     <string name="splash_text">Lori Awesome Logo</string>
+
+    <!-- Week screen -->
+    <string name="count_of_hours_format">%.2f часа</string>
+
+    <!-- Date format -->
+    <string name="day_of_week_name_format">EEEE</string>
+    <string name="day_date_format">d MMMM yyyy</string>
+    <string name="week_range_date_format">d MMMM yyyy</string>
+    <string name="week_range_format" formatted="false">%s - %s</string>
 </resources>

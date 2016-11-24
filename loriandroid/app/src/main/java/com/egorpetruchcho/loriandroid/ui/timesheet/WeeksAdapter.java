@@ -5,18 +5,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.egorpetruchcho.loriandroid_api.utils.DateUtils;
+import com.egorpetruchcho.loriandroid.utils.DateUtils;
 
 
-public class TimeEntriesAdapter extends FragmentStatePagerAdapter {
+public class WeeksAdapter extends FragmentStatePagerAdapter {
 
-    public TimeEntriesAdapter(FragmentManager fragmentManager) {
+    public WeeksAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return TimeEntriesWeekFragment.build(DateUtils.getCurrentWeek().getKthWeek(-position));
+        return WeekFragment.build(DateUtils.getCurrentWeek().getKthWeek(-position));
     }
 
     @Override

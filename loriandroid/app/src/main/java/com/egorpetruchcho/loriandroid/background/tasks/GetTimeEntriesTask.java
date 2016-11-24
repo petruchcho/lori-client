@@ -6,7 +6,7 @@ import com.egorpetruchcho.loriandroid.background.results.TimeEntriesResult;
 import com.egorpetruchcho.loriandroid.state.ApplicationSavedState;
 import com.egorpetruchcho.loriandroid_api.LoriApi;
 import com.egorpetruchcho.loriandroid_api.exceptions.NotAuthorizedException;
-import com.egorpetruchcho.loriandroid_api.model.Week;
+import com.egorpetruchcho.loriandroid.model.Week;
 
 public class GetTimeEntriesTask extends BackgroundTask<TimeEntriesResult> {
     private final Week week;

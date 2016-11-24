@@ -28,7 +28,7 @@ public class TimesheetActivity extends LoriActivity {
     void initViews() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(10);
-        viewPager.setAdapter(new TimeEntriesAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new WeeksAdapter(getSupportFragmentManager()));
     }
 
     public static void startMe(Context context) {

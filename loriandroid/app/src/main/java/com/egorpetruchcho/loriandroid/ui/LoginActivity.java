@@ -44,6 +44,7 @@ public class LoginActivity extends LoriActivity {
                 Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
                 ApplicationSavedState.getInstance().setAuthKey(s);
                 TimesheetActivity.startMe(LoginActivity.this);
+                finish();
             }
         });
     }

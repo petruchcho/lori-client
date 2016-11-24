@@ -1,5 +1,6 @@
 package com.egorpetruchcho.loriandroid_api.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TimeEntry {
@@ -8,7 +9,9 @@ public class TimeEntry {
 
     private String taskName;
 
-    private String timeInMinutes;
+    private int timeInMinutes;
+
+    private BigDecimal timeInHours;
 
     private Date date;
 
@@ -20,11 +23,15 @@ public class TimeEntry {
         return taskName;
     }
 
-    public String getTimeInMinutes() {
+    public int getTimeInMinutes() {
         return timeInMinutes;
     }
 
     public Date getDate() {
         return date;
+    }
+
+    public BigDecimal getTimeInHours() {
+        return timeInHours;
     }
 }
