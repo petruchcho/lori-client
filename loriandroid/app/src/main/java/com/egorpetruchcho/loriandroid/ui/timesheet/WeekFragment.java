@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 
 import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.background.results.TimeEntriesResult;
-import com.egorpetruchcho.loriandroid.background.tasks.GetTimeEntriesTask;
+import com.egorpetruchcho.loriandroid.background.tasks.GetTimeEntriesForWeekTask;
 import com.egorpetruchcho.loriandroid.core.LoriFragment;
 import com.egorpetruchcho.loriandroid.model.Day;
 import com.egorpetruchcho.loriandroid.model.Week;
@@ -59,12 +60,24 @@ public class WeekFragment extends LoriFragment {
         initViews(view);
 
         weekText.setText(DateUtils.getRangeString(getContext(), week.getStartDate(), week.getEndDate(), R.string.week_range_date_format, R.string.week_range_format));
+        daysList.setAdapter(new DaysAdapter(getContext(), week.getDays()));
+        daysList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                DayActivity.startMe(getContext(), week.getDays()[pos].getDate());
+            }
+        });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         reloadData();
     }
 
     private void reloadData() {
-        getBackgroundManager().execute(new GetTimeEntriesTask(week), new RequestListener<TimeEntriesResult>() {
+        progress.setVisibility(View.VISIBLE);
+        getBackgroundManager().execute(new GetTimeEntriesForWeekTask(week), new RequestListener<TimeEntriesResult>() {
             @Override
             public void onRequestFailure(SpiceException spiceException) {
                 // TODO Handle error
@@ -72,8 +85,8 @@ public class WeekFragment extends LoriFragment {
 
             @Override
             public void onRequestSuccess(TimeEntriesResult result) {
-                progress.setVisibility(View.GONE);
                 initList(result.result);
+                progress.setVisibility(View.GONE);
             }
         });
     }
@@ -90,18 +103,20 @@ public class WeekFragment extends LoriFragment {
     }
 
     private void initList(List<TimeEntry> timeEntries) {
-        Day[] days = week.getDays();
+        for (Day day : week.getDays()) {
+            day.clean();
+        }
         for (TimeEntry timeEntry : timeEntries) {
-            for (Day day : days) {
+            for (Day day : week.getDays()) {
                 if (day.isValidTimeEntry(timeEntry)) {
                     day.addTimeEntry(timeEntry);
                 }
             }
         }
-        daysList.setAdapter(new DaysAdapter(getContext(), days));
+        ((DaysAdapter) daysList.getAdapter()).notifyDataSetChanged();
     }
 
-    class DaysAdapter extends ArrayAdapter<Day> {
+    private class DaysAdapter extends ArrayAdapter<Day> {
 
         private final Context context;
         private final LayoutInflater layoutInflater;

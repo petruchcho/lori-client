@@ -6,14 +6,13 @@ import com.egorpetruchcho.loriandroid.background.results.TimeEntriesResult;
 import com.egorpetruchcho.loriandroid.state.ApplicationSavedState;
 import com.egorpetruchcho.loriandroid_api.LoriApi;
 import com.egorpetruchcho.loriandroid_api.exceptions.NotAuthorizedException;
-import com.egorpetruchcho.loriandroid.model.Week;
 
-public class GetTimeEntriesTask extends BackgroundTask<TimeEntriesResult> {
-    private final Week week;
+import java.util.Date;
 
-    public GetTimeEntriesTask(Week week) {
+abstract class GetTimeEntriesTask extends BackgroundTask<TimeEntriesResult> {
+
+    public GetTimeEntriesTask() {
         super(TimeEntriesResult.class);
-        this.week = week;
     }
 
     @Override
@@ -22,6 +21,10 @@ public class GetTimeEntriesTask extends BackgroundTask<TimeEntriesResult> {
         if (sessionToken == null) {
             throw new NotAuthorizedException();
         }
-        return new TimeEntriesResult(LoriApi.getInstance().getTimeEntries(sessionToken, week.getStartDate(), week.getEndDate()));
+        return new TimeEntriesResult(LoriApi.getInstance().getTimeEntries(sessionToken, getStartDate(), getEndDate()));
     }
+
+    protected abstract Date getStartDate();
+
+    protected abstract Date getEndDate();
 }

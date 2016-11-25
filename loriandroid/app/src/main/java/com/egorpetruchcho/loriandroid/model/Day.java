@@ -46,4 +46,10 @@ public class Day {
     public double getCountOfHours() {
         return countOfHours.doubleValue();
     }
+
+    public void clean() {
+        timeEntries.clear();
+        countOfMinutes = 0;
+        countOfHours = BigDecimal.ZERO;
+    }
 }

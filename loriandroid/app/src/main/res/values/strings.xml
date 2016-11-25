@@ -18,7 +18,7 @@
     <string name="splash_text">Lori Awesome Logo</string>
 
     <!-- Week screen -->
-    <string name="count_of_hours_format">%.2f часа</string>
+    <string name="count_of_hours_format">%.2f</string>
 
     <!-- Date format -->
     <string name="day_of_week_name_format">EEEE</string>
