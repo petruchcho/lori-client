@@ -25,4 +25,12 @@
     <string name="day_date_format">d MMMM yyyy</string>
     <string name="week_range_date_format">d MMMM yyyy</string>
     <string name="week_range_format" formatted="false">%s - %s</string>
+    <string name="work_hours_format" formatted="false">%d ч. %d м.</string>
+
+    <!-- Add entry -->
+    <string name="project_label">Проект</string>
+    <string name="task_label">Задача</string>
+    <string name="date_label">Дата</string>
+    <string name="count_of_hours_label">Время работы</string>
+    <string name="add_button">Добавить</string>
 </resources>

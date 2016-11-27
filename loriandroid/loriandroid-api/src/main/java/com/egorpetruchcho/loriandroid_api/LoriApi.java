@@ -3,7 +3,11 @@ package com.egorpetruchcho.loriandroid_api;
 import com.egorpetruchcho.loriandroid_api.exceptions.LoginException;
 import com.egorpetruchcho.loriandroid_api.exceptions.ServerException;
 import com.egorpetruchcho.loriandroid_api.model.Locale;
+import com.egorpetruchcho.loriandroid_api.model.Project;
+import com.egorpetruchcho.loriandroid_api.model.Task;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
+import com.egorpetruchcho.loriandroid_api.model.TimeEntryCommit;
+import com.egorpetruchcho.loriandroid_api.model.User;
 import com.egorpetruchcho.loriandroid_api.utils.DateUtils;
 
 import java.io.IOException;
@@ -19,6 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoriApi {
 
     private static final String TIME_ENTRY_TABLE = "ts$TimeEntry";
+    private static final String PROJECT_TABLE = "ts$Project";
+    private static final String USER_TABLE = "ts$ExtUser";
 
     private static final String LOGIN_URL = "app/dispatch/api/login?u=%s&p=%s&l=%s";
 
@@ -53,13 +59,31 @@ public class LoriApi {
         return ApiHelper.validateLogin(response);
     }
 
-    public List<TimeEntry> getTimeEntries(String sessionToken, Date startDate, Date endDate) throws IOException, ServerException {
-        String betweenDates = "c.date between :startDate and :endDate";
+    public User getUser(String username, String sessionToken) throws IOException, ServerException {
+        String condition = "c.login = :username";
+        String jpql = String.format(JPQL_SELECT_WHERE, USER_TABLE, condition);
+        Response<List<User>> response = service.requestUser(USER_TABLE, jpql, sessionToken, username).execute();
+        return ApiHelper.assertResponseCode(response).get(0);
+    }
 
-        String jpql = String.format(JPQL_SELECT_WHERE, TIME_ENTRY_TABLE, betweenDates);
+    public List<Project> getProjects(String sessionToken) throws IOException, ServerException {
+        String jpql = String.format(JPQL_SELECT_ALL, PROJECT_TABLE);
+        Response<List<Project>> response = service.requestProjects(PROJECT_TABLE, jpql, sessionToken).execute();
+        return ApiHelper.assertResponseCode(response);
+    }
+
+    public List<TimeEntry> getTimeEntries(String sessionToken, Date startDate, Date endDate) throws IOException, ServerException {
+        String condition = "c.date between :startDate and :endDate";
+
+        String jpql = String.format(JPQL_SELECT_WHERE, TIME_ENTRY_TABLE, condition);
 
         Response<List<TimeEntry>> response = service.requestTimeEntries(TIME_ENTRY_TABLE, jpql, sessionToken,
                 DateUtils.apiString(startDate), DateUtils.apiString(endDate)).execute();
         return ApiHelper.assertResponseCode(response);
+    }
+
+    public void createTimeEntry(String sessionToken, TimeEntryCommit timeEntryCommit) throws IOException, ServerException {
+        Response<Void> response = service.createTimeEntry(timeEntryCommit, sessionToken).execute();
+        ApiHelper.assertResponseCode(response);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,14 @@ import java.util.List;
 public class DayActivity extends LoriActivity {
 
     private static final String DATE_EXTRA = "DayActivity.DATE_EXTRA";
+    private static final int ADD_ENTRY_ACTIVITY_REQUEST_CODE = 99;
 
     private Date date;
 
     private ProgressBar progress;
     private TextView dayLabel;
     private ListView entriesList;
+    private FloatingActionButton addEntryButton;
 
     private TimeEntriesAdapter adapter;
 
@@ -73,6 +76,21 @@ public class DayActivity extends LoriActivity {
         progress = (ProgressBar) findViewById(R.id.day_progress);
         dayLabel = (TextView) findViewById(R.id.day_label);
         entriesList = (ListView) findViewById(R.id.entries_list);
+        addEntryButton = (FloatingActionButton) findViewById(R.id.add_entry_button);
+        addEntryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddEntryActivity.startMeForResult(DayActivity.this, date, ADD_ENTRY_ACTIVITY_REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_ENTRY_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            reloadData();
+        }
     }
 
     public static void startMe(Context context, Date date) {
