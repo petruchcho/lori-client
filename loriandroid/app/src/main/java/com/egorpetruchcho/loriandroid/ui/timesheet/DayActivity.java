@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,6 +21,8 @@ import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.background.results.TimeEntriesResult;
 import com.egorpetruchcho.loriandroid.background.tasks.GetTimeEntriesForDayTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
+import com.egorpetruchcho.loriandroid.state.AuthState;
+import com.egorpetruchcho.loriandroid.ui.LoginActivity;
 import com.egorpetruchcho.loriandroid.utils.DateUtils;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -97,6 +102,25 @@ public class DayActivity extends LoriActivity {
         Intent intent = new Intent(context, DayActivity.class);
         intent.putExtra(DATE_EXTRA, date);
         context.startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                AuthState.getInstance().logout();
+                LoginActivity.startMe(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private class TimeEntriesAdapter extends ArrayAdapter<TimeEntry> {

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egorpetruchcho.loriandroid.R;
@@ -18,30 +20,41 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 public class LoginActivity extends LoriActivity {
 
+    private ProgressBar progress;
+    private TextView login;
+    private TextView password;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_login);
+        initViews();
+    }
 
+    private void initViews() {
+        progress = (ProgressBar) findViewById(R.id.login_progress);
+        login = (TextView) findViewById(R.id.login_login);
+        password = (TextView) findViewById(R.id.login_password);
         findViewById(R.id.email_sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
             }
         });
-
     }
 
     private void login() {
-        getBackgroundManager().execute(new LoginTask("admin", "admin", Locale.RU), new RequestListener<String>() {
+        progress.setVisibility(View.VISIBLE);
+        getBackgroundManager().execute(new LoginTask(login.getText().toString(), password.getText().toString(), Locale.RU), new RequestListener<String>() {
             @Override
             public void onRequestFailure(SpiceException spiceException) {
-                Toast.makeText(LoginActivity.this, "fail:))", Toast.LENGTH_LONG).show();
+                progress.setVisibility(View.INVISIBLE);
+                // TODO Refactor errors and its messages (huge task actually)
+                Toast.makeText(LoginActivity.this, spiceException.getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onRequestSuccess(String s) {
-                Toast.makeText(LoginActivity.this, s, Toast.LENGTH_LONG).show();
                 ApplicationSavedState.getInstance().setAuthKey(s);
                 WeeksActivity.startMe(LoginActivity.this);
                 finish();
@@ -50,7 +63,9 @@ public class LoginActivity extends LoriActivity {
     }
 
     public static void startMe(Context context) {
-        context.startActivity(new Intent(context, LoginActivity.class));
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
     }
 }
 

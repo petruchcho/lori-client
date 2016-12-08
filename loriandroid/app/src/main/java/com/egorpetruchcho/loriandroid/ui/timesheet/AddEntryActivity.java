@@ -7,6 +7,9 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +27,7 @@ import com.egorpetruchcho.loriandroid.background.tasks.CreateTimeEntryTask;
 import com.egorpetruchcho.loriandroid.background.tasks.GetProjectsTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
 import com.egorpetruchcho.loriandroid.state.AuthState;
+import com.egorpetruchcho.loriandroid.ui.LoginActivity;
 import com.egorpetruchcho.loriandroid.utils.DateUtils;
 import com.egorpetruchcho.loriandroid_api.model.Project;
 import com.egorpetruchcho.loriandroid_api.model.Task;
@@ -169,6 +173,25 @@ public class AddEntryActivity extends LoriActivity {
         } else {
             tasksSpinner.setAdapter(null);
             addButton.setEnabled(false);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                AuthState.getInstance().logout();
+                LoginActivity.startMe(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

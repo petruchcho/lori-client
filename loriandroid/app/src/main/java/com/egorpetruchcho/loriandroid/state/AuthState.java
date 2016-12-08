@@ -25,4 +25,9 @@ public class AuthState {
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
+
+    public void logout() {
+        ApplicationSavedState.getInstance().setUsername(null);
+        currentUser = null;
+    }
 }

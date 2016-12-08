@@ -2,6 +2,7 @@ package com.egorpetruchcho.loriandroid.background.tasks;
 
 
 import com.egorpetruchcho.loriandroid.background.BackgroundTask;
+import com.egorpetruchcho.loriandroid.state.ApplicationSavedState;
 import com.egorpetruchcho.loriandroid.state.AuthState;
 import com.egorpetruchcho.loriandroid_api.LoriApi;
 import com.egorpetruchcho.loriandroid_api.model.Locale;
@@ -25,6 +26,7 @@ public class LoginTask extends BackgroundTask<String> {
         String sessionToken = LoriApi.getInstance().login(username, password, locale);
         User currentUser = LoriApi.getInstance().getUser(username, sessionToken);
         AuthState.getInstance().setCurrentUser(currentUser);
+        ApplicationSavedState.getInstance().setUsername(username);
         return sessionToken;
     }
 }

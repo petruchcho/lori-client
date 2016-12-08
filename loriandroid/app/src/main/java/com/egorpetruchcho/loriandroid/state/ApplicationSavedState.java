@@ -11,6 +11,7 @@ public class ApplicationSavedState {
     private static final String PREFERENCES_NAME = "Lori.ApplicationSavedState";
 
     private static final String AUTH_KEY = "auth.key";
+    private static final String USERNAME = "username";
 
     private static ApplicationSavedState instance;
 
@@ -45,6 +46,22 @@ public class ApplicationSavedState {
         SharedPreferences preferences = getPreferences();
         if (preferences != null) {
             preferences.edit().putString(AUTH_KEY, authKey).apply();
+        }
+    }
+
+    @Nullable
+    public String getUsername() {
+        SharedPreferences preferences = getPreferences();
+        if (preferences != null) {
+            return preferences.getString(USERNAME, null);
+        }
+        return null;
+    }
+
+    public void setUsername(@Nullable String username) {
+        SharedPreferences preferences = getPreferences();
+        if (preferences != null) {
+            preferences.edit().putString(USERNAME, username).apply();
         }
     }
 }
