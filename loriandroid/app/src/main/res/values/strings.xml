@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">loriandroid</string>
+    <string name="app_name">Lori Timesheets</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

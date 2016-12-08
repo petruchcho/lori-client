@@ -10,7 +10,7 @@ import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
 
 
-public class TimesheetActivity extends LoriActivity {
+public class WeeksActivity extends LoriActivity {
 
     private ViewPager viewPager;
 
@@ -32,6 +32,6 @@ public class TimesheetActivity extends LoriActivity {
     }
 
     public static void startMe(Context context) {
-        context.startActivity(new Intent(context, TimesheetActivity.class));
+        context.startActivity(new Intent(context, WeeksActivity.class));
     }
 }
