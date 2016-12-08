@@ -1,22 +1,20 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 25
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+
     buildTypes {
-        debug {
-            buildConfigField "String", "LORI_HOST", "\"http://192.168.0.103:8080/\""
-        }
         release {
             buildConfigField "String", "LORI_HOST", "\"http://192.168.0.103:8080/\""
             minifyEnabled false
