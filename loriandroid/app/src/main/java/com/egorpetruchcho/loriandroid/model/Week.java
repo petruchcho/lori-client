@@ -16,11 +16,17 @@ public class Week {
     public Week(Date date) {
         Calendar curCalendar = DateUtils.getCurrentCalendar();
         curCalendar.setTime(date);
+        curCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        curCalendar.set(Calendar.MINUTE, 0);
+        curCalendar.set(Calendar.SECOND, 0);
         while (curCalendar.get(Calendar.DAY_OF_WEEK) != DateUtils.START_OF_WEEK) {
             curCalendar.add(Calendar.DAY_OF_MONTH, -1);
         }
         this.startDate = curCalendar.getTime();
-        curCalendar.add(Calendar.DAY_OF_MONTH, COUNT_OF_DAYS_IN_WEEK - 1);
+
+        curCalendar.add(Calendar.DAY_OF_MONTH, COUNT_OF_DAYS_IN_WEEK);
+        curCalendar.add(Calendar.SECOND, -1);
+
         this.endDate = curCalendar.getTime();
 
         this.days = initDays();

@@ -38,4 +38,8 @@ public class DateUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(context.getString(dateFormat));
         return String.format(context.getString(rangeFormat), simpleDateFormat.format(date1), simpleDateFormat.format(date2));
     }
+
+    public static boolean isCurrentWeek(Week week) {
+        return getCurrentDate().compareTo(week.getEndDate()) <= 0;
+    }
 }

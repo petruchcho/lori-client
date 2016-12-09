@@ -6,4 +6,5 @@
     <color name="colorPrimary">@color/loriBlack</color>
     <color name="colorPrimaryDark">@color/black</color>
     <color name="colorAccent">#187BDC</color>
+    <color name="colorControlHighlight">#42187BDC</color>
 </resources>

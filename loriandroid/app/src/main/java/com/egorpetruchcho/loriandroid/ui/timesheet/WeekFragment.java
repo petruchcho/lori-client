@@ -100,6 +100,8 @@ public class WeekFragment extends LoriFragment {
         daysList = (ListView) view.findViewById(R.id.days_list);
         weekText = (TextView) view.findViewById(R.id.week_text);
         progress = (ProgressBar) view.findViewById(R.id.week_progress);
+
+        view.findViewById(R.id.week_arrow_left).setVisibility(DateUtils.isCurrentWeek(week) ? View.INVISIBLE : View.VISIBLE);
     }
 
     private void initList(List<TimeEntry> timeEntries) {
