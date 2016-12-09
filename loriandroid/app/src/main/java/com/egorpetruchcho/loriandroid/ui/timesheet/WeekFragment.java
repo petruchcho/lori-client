@@ -16,14 +16,13 @@ import android.widget.TextView;
 
 import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.background.results.TimeEntriesResult;
+import com.egorpetruchcho.loriandroid.background.tasks.BackgroundTaskListener;
 import com.egorpetruchcho.loriandroid.background.tasks.GetTimeEntriesForWeekTask;
 import com.egorpetruchcho.loriandroid.core.LoriFragment;
 import com.egorpetruchcho.loriandroid.model.Day;
 import com.egorpetruchcho.loriandroid.model.Week;
 import com.egorpetruchcho.loriandroid.utils.DateUtils;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.Date;
 import java.util.List;
@@ -77,9 +76,9 @@ public class WeekFragment extends LoriFragment {
 
     private void reloadData() {
         progress.setVisibility(View.VISIBLE);
-        getBackgroundManager().execute(new GetTimeEntriesForWeekTask(week), new RequestListener<TimeEntriesResult>() {
+        getBackgroundManager().execute(new GetTimeEntriesForWeekTask(week), new BackgroundTaskListener<TimeEntriesResult>() {
             @Override
-            public void onRequestFailure(SpiceException spiceException) {
+            public void onRequestFailure(Exception exception) {
                 // TODO Handle error
             }
 

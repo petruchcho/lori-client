@@ -19,10 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.background.results.ProjectsResult;
+import com.egorpetruchcho.loriandroid.background.tasks.BackgroundTaskListener;
 import com.egorpetruchcho.loriandroid.background.tasks.CreateTimeEntryTask;
 import com.egorpetruchcho.loriandroid.background.tasks.GetProjectsTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
@@ -32,8 +32,6 @@ import com.egorpetruchcho.loriandroid.utils.DateUtils;
 import com.egorpetruchcho.loriandroid_api.model.Project;
 import com.egorpetruchcho.loriandroid_api.model.Task;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntryCommit;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -124,9 +122,9 @@ public class AddEntryActivity extends LoriActivity {
 
         progress.setVisibility(View.VISIBLE);
         TimeEntryCommit timeEntry = new TimeEntryCommit(date, task.getId(), hours * 60 + minutes, AuthState.getInstance().getCurrentUser());
-        getBackgroundManager().execute(new CreateTimeEntryTask(timeEntry), new RequestListener<Void>() {
+        getBackgroundManager().execute(new CreateTimeEntryTask(timeEntry), new BackgroundTaskListener<Void>() {
             @Override
-            public void onRequestFailure(SpiceException spiceException) {
+            public void onRequestFailure(Exception spiceException) {
             }
 
             @Override
@@ -138,10 +136,9 @@ public class AddEntryActivity extends LoriActivity {
     }
 
     private void reloadData() {
-        getBackgroundManager().execute(new GetProjectsTask(), new RequestListener<ProjectsResult>() {
+        getBackgroundManager().execute(new GetProjectsTask(), new BackgroundTaskListener<ProjectsResult>() {
             @Override
-            public void onRequestFailure(SpiceException spiceException) {
-                Toast.makeText(AddEntryActivity.this, "bum", Toast.LENGTH_LONG).show();
+            public void onRequestFailure(Exception exception) {
             }
 
             @Override

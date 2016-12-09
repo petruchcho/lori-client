@@ -1,10 +1,10 @@
 package com.egorpetruchcho.loriandroid_api;
 
 import com.egorpetruchcho.loriandroid_api.exceptions.LoginException;
+import com.egorpetruchcho.loriandroid_api.exceptions.NotAuthorizedException;
 import com.egorpetruchcho.loriandroid_api.exceptions.ServerException;
 import com.egorpetruchcho.loriandroid_api.model.Locale;
 import com.egorpetruchcho.loriandroid_api.model.Project;
-import com.egorpetruchcho.loriandroid_api.model.Task;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntryCommit;
 import com.egorpetruchcho.loriandroid_api.model.User;
@@ -49,7 +49,7 @@ public class LoriApi {
     }
 
     // Uses separate okHttpClient to avoid json parsing problems
-    public String login(String username, String password, Locale locale) throws IOException, ServerException, LoginException {
+    public String login(String username, String password, Locale locale) throws IOException, ServerException, LoginException, NotAuthorizedException {
         String loginUrl = String.format(LOGIN_URL, username, password, locale.name().toLowerCase());
         Request request = new Request.Builder()
                 .get()
@@ -59,20 +59,20 @@ public class LoriApi {
         return ApiHelper.validateLogin(response);
     }
 
-    public User getUser(String username, String sessionToken) throws IOException, ServerException {
+    public User getUser(String username, String sessionToken) throws IOException, ServerException, NotAuthorizedException {
         String condition = "c.login = :username";
         String jpql = String.format(JPQL_SELECT_WHERE, USER_TABLE, condition);
         Response<List<User>> response = service.requestUser(USER_TABLE, jpql, sessionToken, username).execute();
         return ApiHelper.assertResponseCode(response).get(0);
     }
 
-    public List<Project> getProjects(String sessionToken) throws IOException, ServerException {
+    public List<Project> getProjects(String sessionToken) throws IOException, ServerException, NotAuthorizedException {
         String jpql = String.format(JPQL_SELECT_ALL, PROJECT_TABLE);
         Response<List<Project>> response = service.requestProjects(PROJECT_TABLE, jpql, sessionToken).execute();
         return ApiHelper.assertResponseCode(response);
     }
 
-    public List<TimeEntry> getTimeEntries(String sessionToken, Date startDate, Date endDate) throws IOException, ServerException {
+    public List<TimeEntry> getTimeEntries(String sessionToken, Date startDate, Date endDate) throws IOException, ServerException, NotAuthorizedException {
         String condition = "c.date between :startDate and :endDate";
 
         String jpql = String.format(JPQL_SELECT_WHERE, TIME_ENTRY_TABLE, condition);
@@ -82,7 +82,7 @@ public class LoriApi {
         return ApiHelper.assertResponseCode(response);
     }
 
-    public void createTimeEntry(String sessionToken, TimeEntryCommit timeEntryCommit) throws IOException, ServerException {
+    public void createTimeEntry(String sessionToken, TimeEntryCommit timeEntryCommit) throws IOException, ServerException, NotAuthorizedException {
         Response<Void> response = service.createTimeEntry(timeEntryCommit, sessionToken).execute();
         ApiHelper.assertResponseCode(response);
     }

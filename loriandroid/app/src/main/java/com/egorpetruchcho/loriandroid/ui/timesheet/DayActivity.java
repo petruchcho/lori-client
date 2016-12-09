@@ -19,14 +19,13 @@ import android.widget.TextView;
 
 import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.background.results.TimeEntriesResult;
+import com.egorpetruchcho.loriandroid.background.tasks.BackgroundTaskListener;
 import com.egorpetruchcho.loriandroid.background.tasks.GetTimeEntriesForDayTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
 import com.egorpetruchcho.loriandroid.state.AuthState;
 import com.egorpetruchcho.loriandroid.ui.LoginActivity;
 import com.egorpetruchcho.loriandroid.utils.DateUtils;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,9 +63,9 @@ public class DayActivity extends LoriActivity {
 
     private void reloadData() {
         progress.setVisibility(View.VISIBLE);
-        getBackgroundManager().execute(new GetTimeEntriesForDayTask(date), new RequestListener<TimeEntriesResult>() {
+        getBackgroundManager().execute(new GetTimeEntriesForDayTask(date), new BackgroundTaskListener<TimeEntriesResult>() {
             @Override
-            public void onRequestFailure(SpiceException spiceException) {
+            public void onRequestFailure(Exception exception) {
             }
 
             @Override

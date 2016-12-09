@@ -10,13 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egorpetruchcho.loriandroid.R;
+import com.egorpetruchcho.loriandroid.background.tasks.BackgroundTaskListener;
 import com.egorpetruchcho.loriandroid.background.tasks.LoginTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
 import com.egorpetruchcho.loriandroid.state.ApplicationSavedState;
 import com.egorpetruchcho.loriandroid.ui.timesheet.WeeksActivity;
 import com.egorpetruchcho.loriandroid_api.model.Locale;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 public class LoginActivity extends LoriActivity {
 
@@ -45,12 +44,12 @@ public class LoginActivity extends LoriActivity {
 
     private void login() {
         progress.setVisibility(View.VISIBLE);
-        getBackgroundManager().execute(new LoginTask(login.getText().toString(), password.getText().toString(), Locale.RU), new RequestListener<String>() {
+        getBackgroundManager().execute(new LoginTask(login.getText().toString(), password.getText().toString(), Locale.RU), new BackgroundTaskListener<String>() {
             @Override
-            public void onRequestFailure(SpiceException spiceException) {
+            public void onRequestFailure(Exception exception) {
                 progress.setVisibility(View.INVISIBLE);
                 // TODO Refactor errors and its messages (huge task actually)
-                Toast.makeText(LoginActivity.this, spiceException.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override

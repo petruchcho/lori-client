@@ -6,14 +6,13 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import com.egorpetruchcho.loriandroid.R;
+import com.egorpetruchcho.loriandroid.background.tasks.BackgroundTaskListener;
 import com.egorpetruchcho.loriandroid.background.tasks.GetUserTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
 import com.egorpetruchcho.loriandroid.state.ApplicationSavedState;
 import com.egorpetruchcho.loriandroid.state.AuthState;
 import com.egorpetruchcho.loriandroid.ui.timesheet.WeeksActivity;
 import com.egorpetruchcho.loriandroid_api.model.User;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 public class SplashActivity extends LoriActivity {
 
@@ -45,9 +44,9 @@ public class SplashActivity extends LoriActivity {
             LoginActivity.startMe(this);
             finish();
         } else {
-            getBackgroundManager().execute(new GetUserTask(currentUsername), new RequestListener<User>() {
+            getBackgroundManager().execute(new GetUserTask(currentUsername), new BackgroundTaskListener<User>() {
                 @Override
-                public void onRequestFailure(SpiceException spiceException) {
+                public void onRequestFailure(Exception spiceException) {
                     // TODO Should proceed different errors in different ways, but it's ok by now
                     LoginActivity.startMe(SplashActivity.this);
                 }
