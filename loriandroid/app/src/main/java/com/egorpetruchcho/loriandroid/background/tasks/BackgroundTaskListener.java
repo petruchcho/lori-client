@@ -15,7 +15,7 @@ public abstract class BackgroundTaskListener<T> implements RequestListener<T> {
             AuthState.getInstance().logout();
             LoginActivity.startMe(LoriApplication.getInstance());
         } else {
-            onRequestFailure((Exception) spiceException.getCause());
+            onRequestFailure((Exception) spiceException);
         }
     }
 
