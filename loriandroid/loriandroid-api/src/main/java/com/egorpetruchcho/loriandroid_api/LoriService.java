@@ -20,7 +20,7 @@ public interface LoriService {
     @GET("app/dispatch/api/query.json?view=project-full")
     Call<List<Project>> requestProjects(@Query("e") String tableName, @Query("q") String jpql, @Query("s") String sessionToken);
 
-    @GET("app/dispatch/api/query.json")
+    @GET("app/dispatch/api/query.json?view=timeEntry-browse")
     Call<List<TimeEntry>> requestTimeEntries(@Query("e") String tableName, @Query("q") String jpql, @Query("s") String sessionToken,
                                              @Query("startDate") String startDate, @Query("endDate") String endDate);
 

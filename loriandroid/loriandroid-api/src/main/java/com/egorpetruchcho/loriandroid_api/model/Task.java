@@ -5,6 +5,7 @@ public class Task {
 
     private String id;
     private String name;
+    private Project project;
 
     public String getId() {
         return id;
@@ -12,5 +13,12 @@ public class Task {
 
     public String getName() {
         return name;
+    }
+
+    public String getProjectName() {
+        if (project != null) {
+            return project.getName();
+        }
+        return null;
     }
 }

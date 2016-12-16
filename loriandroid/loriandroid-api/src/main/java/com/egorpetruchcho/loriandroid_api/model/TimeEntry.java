@@ -7,6 +7,8 @@ public class TimeEntry {
 
     private String id;
 
+    private Task task;
+
     private String taskName;
 
     private int timeInMinutes;
@@ -20,7 +22,20 @@ public class TimeEntry {
     }
 
     public String getTaskName() {
-        return taskName;
+        if (taskName != null) {
+            return taskName;
+        }
+        if (task != null) {
+            return task.getName();
+        }
+        return null;
+    }
+
+    public String getProjectName() {
+        if (task != null) {
+            return task.getProjectName();
+        }
+        return null;
     }
 
     public int getTimeInMinutes() {

@@ -207,6 +207,9 @@ public class DayActivity extends LoriActivity {
 
             countOfHours.setText(String.format(getString(R.string.work_hours_format), hours, minutes));
 
+            String projectName = timeEntry.getProjectName();
+            projectNameLabel.setText(projectName);
+
             return convertView;
         }
     }
