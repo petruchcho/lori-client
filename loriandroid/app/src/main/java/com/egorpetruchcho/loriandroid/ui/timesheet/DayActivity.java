@@ -201,7 +201,11 @@ public class DayActivity extends LoriActivity {
             TimeEntry timeEntry = getItem(position);
 
             taskNameLabel.setText(timeEntry.getTaskName());
-            countOfHours.setText(String.format(getString(R.string.count_of_hours_format), timeEntry.getTimeInHours()));
+
+            int hours = timeEntry.getTimeInMinutes() / 60;
+            int minutes = timeEntry.getTimeInMinutes() % 60;
+
+            countOfHours.setText(String.format(getString(R.string.work_hours_format), hours, minutes));
 
             return convertView;
         }

@@ -14,7 +14,6 @@ public class Day {
     private final Date date;
     private final List<TimeEntry> timeEntries = new ArrayList<>();
 
-    private BigDecimal countOfHours = BigDecimal.ZERO;
     private int countOfMinutes = 0;
 
     public Day(Date date) {
@@ -24,7 +23,6 @@ public class Day {
     public void addTimeEntry(TimeEntry timeEntry) {
         timeEntries.add(timeEntry);
         countOfMinutes += timeEntry.getTimeInMinutes();
-        countOfHours = countOfHours.add(timeEntry.getTimeInHours());
     }
 
     public boolean isValidTimeEntry(TimeEntry timeEntry) {
@@ -43,13 +41,8 @@ public class Day {
         return countOfMinutes;
     }
 
-    public double getCountOfHours() {
-        return countOfHours.doubleValue();
-    }
-
     public void clean() {
         timeEntries.clear();
         countOfMinutes = 0;
-        countOfHours = BigDecimal.ZERO;
     }
 }

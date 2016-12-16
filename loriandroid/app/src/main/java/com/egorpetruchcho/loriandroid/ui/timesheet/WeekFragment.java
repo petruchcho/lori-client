@@ -143,7 +143,9 @@ public class WeekFragment extends LoriFragment {
 
             dayOfWeekLabel.setText(DateUtils.getString(context, day.getDate(), R.string.day_of_week_name_format));
             dayDateLabel.setText(DateUtils.getString(context, day.getDate(), R.string.day_date_format));
-            countOfHours.setText(String.format(getString(R.string.count_of_hours_format), day.getCountOfHours()));
+            int hours = day.getCountOfMinutes() / 60;
+            int minutes = day.getCountOfMinutes() % 60;
+            countOfHours.setText(String.format(getString(R.string.work_hours_format), hours, minutes));
 
             return convertView;
         }
