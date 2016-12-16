@@ -4,6 +4,7 @@ import com.egorpetruchcho.loriandroid_api.model.Project;
 import com.egorpetruchcho.loriandroid_api.model.Task;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntryCommit;
+import com.egorpetruchcho.loriandroid_api.model.TimeEntryDelete;
 import com.egorpetruchcho.loriandroid_api.model.User;
 
 import java.util.List;
@@ -29,4 +30,7 @@ public interface LoriService {
 
     @POST("app/dispatch/api/commit")
     Call<Void> createTimeEntry(@Body TimeEntryCommit timeEntry, @Query("s") String sessionToken);
+
+    @POST("app/dispatch/api/commit")
+    Call<Void> deleteTimeEntry(@Body TimeEntryDelete timeEntry, @Query("s") String sessionToken);
 }

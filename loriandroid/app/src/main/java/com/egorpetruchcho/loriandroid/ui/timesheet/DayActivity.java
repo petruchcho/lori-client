@@ -1,17 +1,20 @@
 package com.egorpetruchcho.loriandroid.ui.timesheet;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -20,12 +23,14 @@ import android.widget.TextView;
 import com.egorpetruchcho.loriandroid.R;
 import com.egorpetruchcho.loriandroid.background.results.TimeEntriesResult;
 import com.egorpetruchcho.loriandroid.background.tasks.BackgroundTaskListener;
+import com.egorpetruchcho.loriandroid.background.tasks.DeleteTimeEntryTask;
 import com.egorpetruchcho.loriandroid.background.tasks.GetTimeEntriesForDayTask;
 import com.egorpetruchcho.loriandroid.core.LoriActivity;
 import com.egorpetruchcho.loriandroid.state.AuthState;
 import com.egorpetruchcho.loriandroid.ui.LoginActivity;
 import com.egorpetruchcho.loriandroid.utils.DateUtils;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
+import com.egorpetruchcho.loriandroid_api.model.TimeEntryDelete;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +62,45 @@ public class DayActivity extends LoriActivity {
 
         adapter = new TimeEntriesAdapter(this);
         entriesList.setAdapter(adapter);
+        entriesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DayActivity.this);
+
+                final TimeEntry timeEntry = adapter.getItem(i);
+                if (timeEntry == null) {
+                    return false;
+                }
+
+                builder.setMessage(R.string.remove_dialog)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                progress.setVisibility(View.VISIBLE);
+                                getBackgroundManager().execute(new DeleteTimeEntryTask(new TimeEntryDelete(timeEntry.getId())), new BackgroundTaskListener<Void>() {
+                                    @Override
+                                    public void onRequestFailure(Exception exception) {
+                                    }
+
+                                    @Override
+                                    public void onRequestSuccess(Void aVoid) {
+                                        reloadData();
+                                    }
+                                });
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
 
         reloadData();
     }

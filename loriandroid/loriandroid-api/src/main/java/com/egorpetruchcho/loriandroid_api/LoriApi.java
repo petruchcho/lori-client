@@ -7,6 +7,7 @@ import com.egorpetruchcho.loriandroid_api.model.Locale;
 import com.egorpetruchcho.loriandroid_api.model.Project;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntry;
 import com.egorpetruchcho.loriandroid_api.model.TimeEntryCommit;
+import com.egorpetruchcho.loriandroid_api.model.TimeEntryDelete;
 import com.egorpetruchcho.loriandroid_api.model.User;
 import com.egorpetruchcho.loriandroid_api.utils.DateUtils;
 
@@ -84,6 +85,11 @@ public class LoriApi {
 
     public void createTimeEntry(String sessionToken, TimeEntryCommit timeEntryCommit) throws IOException, ServerException, NotAuthorizedException {
         Response<Void> response = service.createTimeEntry(timeEntryCommit, sessionToken).execute();
+        ApiHelper.assertResponseCode(response);
+    }
+
+    public void deleteTimeEntry(String sessionToken, TimeEntryDelete timeEntryDelete) throws IOException, ServerException, NotAuthorizedException {
+        Response<Void> response = service.deleteTimeEntry(timeEntryDelete, sessionToken).execute();
         ApiHelper.assertResponseCode(response);
     }
 }
