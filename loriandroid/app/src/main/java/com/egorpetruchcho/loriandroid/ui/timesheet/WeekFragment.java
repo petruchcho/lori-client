@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,8 @@ public class WeekFragment extends LoriFragment {
         getBackgroundManager().execute(new GetTimeEntriesForWeekTask(week), new BackgroundTaskListener<TimeEntriesResult>() {
             @Override
             public void onRequestFailure(Exception exception) {
-                // TODO Handle error
+                progress.setVisibility(View.GONE);
+                Snackbar.make(progress, exception.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
 
             @Override
