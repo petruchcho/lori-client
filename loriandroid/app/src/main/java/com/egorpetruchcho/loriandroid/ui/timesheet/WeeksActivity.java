@@ -33,7 +33,9 @@ public class WeeksActivity extends LoriActivity {
     void initViews() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(4);
-        viewPager.setAdapter(new WeeksAdapter(getSupportFragmentManager()));
+        WeeksAdapter adapter = new WeeksAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(adapter.getCount() / 2);
     }
 
     @Override

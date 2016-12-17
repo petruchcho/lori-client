@@ -16,11 +16,12 @@ public class WeeksAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return WeekFragment.build(DateUtils.getCurrentWeek().getKthWeek(-position));
+        position -= getCount() / 2;
+        return WeekFragment.build(DateUtils.getCurrentWeek().getKthWeek(position));
     }
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE;
+        return 10000;
     }
 }
