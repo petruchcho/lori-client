@@ -53,6 +53,7 @@ public class SplashActivity extends LoriActivity {
 
                 @Override
                 public void onRequestSuccess(User user) {
+                    AuthState.getInstance().setCurrentUser(user);
                     WeeksActivity.startMe(SplashActivity.this);
                     finish();
                 }
